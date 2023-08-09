@@ -1,0 +1,58 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+    
+	<ViewSettingsDialog
+		id="filterDialog"
+		confirm=".onConfirmFilter">
+		<filterItems>
+        <ViewSettingsFilterItem
+				id="filterCategory"
+				text="Item"
+				key="Cat">
+				<items>
+             <ViewSettingsItem
+						id="paanCat"
+						text="Paan"
+						key="paanKey"/>
+					<ViewSettingsItem
+						id="biriCat"
+						text="Biri"
+						key="biriKey"/>
+					<ViewSettingsItem
+						id="teaCat"
+						text="Tea"
+						key="teaKey"/>
+</items>
+			</ViewSettingsFilterItem>
+			<ViewSettingsFilterItem
+				id="filterPrice"
+				text="Price"
+				key="price"
+				multiSelect="false">
+				 <items>
+					<ViewSettingsItem
+						id="eq"
+						text="Equal to 15 BDT"
+						key="eq"/>
+					<ViewSettingsItem
+						id="le"
+						text="Less than equal to 15 BDT"
+						key="le"/>
+					<ViewSettingsItem
+						id="lt"
+						text="Less than 15 BDT"
+						key="lt"/>
+					<ViewSettingsItem
+						id="ge"
+						text="Greater than equal to 15 BDT"
+						key="ge"/>
+					<ViewSettingsItem
+						id="gt"
+						text="Greater than 15 BDT"
+						key="gt"/>
+				</items>
+			</ViewSettingsFilterItem>
+		</filterItems>
+	</ViewSettingsDialog>
+</core:FragmentDefinition>

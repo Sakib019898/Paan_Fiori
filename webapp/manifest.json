@@ -1,0 +1,160 @@
+{
+    "_version": "1.12.0",
+    "sap.app": {
+        "id": "sap.ui.demo.products",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "title": "Paan kha",
+        "description": "{{appDescription}}",
+        "applicationVersion": {
+            "version": "1.0.0"
+        },
+        "dataSources": {
+            "invoiceRemote": {
+                "uri": "https://services.odata.org/V2/(S(gp03wfqbadawosxgwwyed2c2))/OData/OData.svc/",
+                "type": "OData",
+                "settings": {
+                    "odataVersion": "2.0",
+                    "localUri": "localService/metadata.xml"
+                }
+            }
+        },
+        "sourceTemplate": {
+            "id": "@sap/ux-app-migrator:freestyle",
+            "version": "1.10.2",
+            "toolsId": "59a1009c-fe08-4ab4-8ed2-db480abe9e91"
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "rootView": {
+            "viewName": "sap.ui.demo.products.view.App",
+            "type": "XML",
+            "id": "app"
+        },
+        "dependencies": {
+            "minUI5Version": "",
+            "libs": {
+                "sap.ui.core": {},
+                "sap.m": {},
+				"sap.f": {},
+				"sap.uxap": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "sap.ui.demo.products.i18n.i18n",
+                    "supportedLocales": [
+                        ""
+                    ],
+                    "fallbackLocale": ""
+                }
+            },
+            "products": {
+                "type": "sap.ui.model.json.JSONModel",
+                "uri": "mockdata/products.json",
+                "settings": {
+                   "defaultBindingMode": "TwoWay"
+                }
+            },
+            "invoice": {
+				"dataSource": "invoiceRemote"
+			}
+        },
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "viewType": "XML",
+                "viewPath": "sap.ui.demo.products.view",
+                "controlId": "tutorialApp",
+                "controlAggregation": "pages",
+                "transition": "slide",
+                "bypassed": {
+                    "target": [
+                        "startpage"
+                    ]
+                },
+                "async" : true
+            },
+            "routes": [
+                {
+                    "pattern": "",
+                    "name": "home",
+                    "target": "startpage"
+                },
+                {
+                    "pattern": "itempage",
+                    "name": "itempage",
+                    "target": "itempage"
+                },
+                {
+                    "pattern": "product",
+                    "name": "product",
+                    "target": "product"  
+                },
+                {
+                  "pattern": "detailproduct/{productPath}",
+                  "name": "detailproduct",
+                  "target": "detailproduct"
+                },
+				{
+					"pattern": ":layout:",
+					"name": "master",
+					"target": [
+						"master",
+						"detail"
+					]
+				},
+				{
+					"pattern": "detail/{product}/{layout}",
+					"name": "detail",
+					"target": [
+						"master",
+						"detail"
+					]
+				}
+            ],
+            "targets": {
+                "startpage": {
+                    "viewName": "Startpage",
+                    "viewLevel": 0
+                },
+                "itempage": {
+                    "viewName": "Itempage",
+                    "viewLevel": 1
+                },
+                "product": {
+                    "viewName": "Product",
+                    "viewLevel": 1
+                },
+                "detailproduct": {
+                    "viewName": "Detailproduct",
+                    "viewLevel": 2
+                  },
+                "master": {
+					"name": "Master",
+					"controlAggregation": "beginColumnPages",
+                    "viewLevel": 1
+				},
+				"detail": {
+					"name": "Detail",
+					"controlAggregation": "midColumnPages",
+                    "viewLevel": 1
+				}
+            }
+        }
+    }
+}

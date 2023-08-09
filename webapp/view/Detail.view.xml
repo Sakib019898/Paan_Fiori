@@ -1,0 +1,246 @@
+<mvc:View controllerName="sap.ui.demo.products.controller.Detail"
+	xmlns="sap.uxap"
+	xmlns:m="sap.m"
+	xmlns:f="sap.f"
+	xmlns:form="sap.ui.layout.form"
+	xmlns:mvc="sap.ui.core.mvc">
+	<ObjectPageLayout
+		id="ObjectPageLayout"
+		showTitleInHeaderContent="true"
+		alwaysShowContentHeader="false"
+		preserveHeaderStateOnScroll="false"
+		headerContentPinnable="true"
+		isChildPage="true"
+		upperCaseAnchorBar="false">
+		<headerTitle>
+			<ObjectPageDynamicHeaderTitle>
+			<expandedHeading>
+					<m:Title text="{products>Name}" wrapping="true" class="sapUiSmallMarginEnd"/>
+				</expandedHeading>
+				<snappedHeading>
+					<m:FlexBox wrap="Wrap" fitContainer="true" alignItems="Center">
+						<m:FlexBox wrap="NoWrap" fitContainer="true" alignItems="Center" class="sapUiTinyMarginEnd">
+							<f:Avatar
+								src="{products>ProductPicUrl}"
+								displaySize="XL"
+								displayShape="Square"
+								class="sapUiTinyMarginEnd"/>
+							<m:Title text="{products>Name}" wrapping="true"/>
+						</m:FlexBox>
+					</m:FlexBox>
+				</snappedHeading>
+
+              <navigationActions>
+					<m:OverflowToolbarButton
+						type="Transparent"
+						icon="sap-icon://full-screen"
+						press=".handleFullScreen"
+						tooltip="Enter Full Screen Mode"
+						visible="{= ${/actionButtonsInfo/midColumn/fullScreen} !== null }"/>
+					<m:OverflowToolbarButton
+						type="Transparent"
+						icon="sap-icon://exit-full-screen"
+						press=".handleExitFullScreen"
+						tooltip="Exit Full Screen Mode"
+						visible="{= ${/actionButtonsInfo/midColumn/exitFullScreen} !== null }"/>
+					<m:OverflowToolbarButton
+						type="Transparent"
+						icon="sap-icon://decline"
+						press=".handleClose"
+						tooltip="Close column"
+						visible="{= ${/actionButtonsInfo/midColumn/closeColumn} !== null }"/>
+				</navigationActions>
+
+			</ObjectPageDynamicHeaderTitle>
+		</headerTitle>
+		<headerContent>
+			<m:FlexBox wrap="Wrap" fitContainer="true" alignItems="Stretch">
+				<f:Avatar
+				    src="{products>ProductPicUrl}"
+					displaySize="S"
+					displayShape="Square"
+					class="sapUiTinyMarginEnd">
+				</f:Avatar>
+				<m:VBox justifyContent="Center" class="sapUiSmallMarginEnd">
+					<m:Label text="Main Category"/>
+					<m:Text text="{products>MainCategory}"/>
+				</m:VBox>
+				<m:VBox justifyContent="Center" class="sapUiSmallMarginEnd">
+					<m:Label text="Subcategory"/>
+					<m:Text text="{products>Category}"/>
+				</m:VBox>
+				<m:VBox justifyContent="Center" class="sapUiSmallMarginEnd">
+					<m:Label text="Price"/>
+					<m:ObjectNumber number="{products>CurrencyCode} {products>Price}" emphasized="false"/>
+				</m:VBox>
+				
+                    <m:VBox justifyContent="End" class="sapUiSmallMarginEnd">
+					<m:Label text="Description"/>
+					<m:Text text="{products>Description}"/>
+				</m:VBox>
+                
+			</m:FlexBox>			
+		</headerContent>
+
+		<sections>
+			<ObjectPageSection title="General Information">
+				<subSections>
+					<ObjectPageSubSection>
+					 <m:IconTabBar
+					id="iconTabBar"
+					headerBackgroundDesign="Transparent"
+					select=".onTabSelect">
+					<m:items>
+						<m:IconTabFilter
+							id="iconTabFilterDescription"
+							icon="sap-icon://card"
+							tooltip="{i18n>detailIconTabBarCard}"
+							key="show">
+						</m:IconTabFilter>
+						<m:IconTabFilter
+							id="iconTabFilterInfo"
+							icon="sap-icon://edit"
+							tooltip="{i18n>detailIconTabBarDimension}"
+							key="edit">
+						</m:IconTabFilter>
+					</m:items>
+				       <m:content>
+							<form:SimpleForm
+								maxContainerCols="3"
+								editable="false"
+								layout="ResponsiveGridLayout"
+					     		labelSpanL="12"
+								labelSpanM="12"
+								emptySpanL="0"
+								emptySpanM="0"
+								columnsL="2"
+								columnsM="2" 
+								>
+								<form:content>
+									<m:Label text="PAAN ID"/>
+									<m:Input id="1" value="{path:'products>ProductId', mode: 'OneWay'}" editable="false" width="120px"/>
+									
+									<m:Label text="PAAN Description"/>
+									<m:Input id="2" value="{path:'products>Description', mode: 'OneWay'}" editable="false"/>
+									<m:Button id="button_2" 
+									          icon="sap-icon://clear-all" 
+											  visible="false" 
+											  text="Clear"
+											  type="Reject"
+											  width="110px"
+											  press=".del_2"/>
+									
+									<m:Label text="PAAN Supplier"/>
+									<m:Input id="3" value="{path:'products>SupplierName', mode: 'OneWay'}" editable="false"/>
+									<m:Button id="button_3" 
+									          icon="sap-icon://clear-all" 
+											  visible="false" 
+											  text="Clear"
+											  type="Reject"
+											  width="110px"
+											  press=".del_3"/>
+									
+									<m:Label text="Date of Supply"/>
+									<m:Input id="4" value="{path:'products>DateOfSale', mode: 'OneWay'}" type="Date" editable="false"/>
+									<m:Button id="button_4" 
+									          icon="sap-icon://clear-all" 
+											  visible="false" 
+											  text="Clear"
+											  type="Reject"
+											  width="110px"
+											  press=".del_4"/>
+									
+									<m:Label text="PAAN Quantity"/>
+									<m:Input id="5" value="{path:'products>Quantity', mode: 'OneWay'}" editable="false" type="Number"/>
+									<m:Text text="{products>UoM}" />
+									<m:Button id="button_5" 
+									          icon="sap-icon://clear-all" 
+											  visible="false" 
+											  text="Clear"
+											  type="Reject"
+											  width="110px"
+											  press=".del_5"/>
+									
+									<m:Label text="PAAN Weight"/>
+									<m:Input id="6" value="{path:'products>WeightMeasure', mode: 'OneWay'}" editable="false" type="Number"/>
+									<m:Text text="{products>WeightUnit}"/>
+									<m:Button id="button_6" 
+									          icon="sap-icon://clear-all" 
+											  visible="false" 
+											  text="Clear"
+											  type="Reject"
+											  width="110px"
+											  press=".del_6"/>
+									
+									<m:Label text="PAAN Width"/>
+									<m:Input id="7" value="{path:'products>Width', mode: 'OneWay'}" editable="false" type="Number"/>
+									<m:Text text="{products>DimUnit}"/>
+									<m:Button id="button_7" 
+									          icon="sap-icon://clear-all" 
+											  visible="false" 
+											  text="Clear"
+											  type="Reject"
+											  width="110px"
+											  press=".del_7"/>
+									
+									<m:Label text="PAAN Depth"/>
+									<m:Input id="8" value="{path:'products>Depth', mode: 'OneWay'}" editable="false" type="Number"/>
+									<m:Text text="{products>DimUnit}"/>
+									<m:Button id="button_8" 
+									          icon="sap-icon://clear-all" 
+											  visible="false" 
+											  text="Clear"
+											  type="Reject"
+											  width="110px"
+											  press=".del_8"/>
+									
+									<m:Label text="PAAN Height"/>
+									<m:Input id="9" value="{path:'products>Height', mode: 'OneWay'}" editable="false" type="Number"/>
+									<m:Text text="{products>DimUnit}"/>
+									<m:Button id="button_9" 
+									          icon="sap-icon://clear-all" 
+											  visible="false" 
+											  text="Clear"
+											  type="Reject"
+											  width="110px"
+											  press=".del_9"/>
+								</form:content>
+							</form:SimpleForm>
+						</m:content>
+						</m:IconTabBar>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+
+			<ObjectPageSection title="Suppliers">
+				<subSections>
+					<ObjectPageSubSection>
+						<blocks>
+							<m:Table
+								id="suppliersTable"
+								items="{path : 'products>/ProductCollectionStats/Filters/1/values'}">
+								<m:columns>
+									<m:Column/>
+								</m:columns>
+								<m:items>
+									<m:ColumnListItem type="Navigation">
+										<m:cells>
+											<m:ObjectIdentifier text="{products>text}"/>
+										</m:cells>
+									</m:ColumnListItem>
+								</m:items>
+							</m:Table>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+		</sections>
+<footer>
+	<m:OverflowToolbar>
+				<m:ToolbarSpacer/>
+				<m:Button type="Accept" text="Save" press=".update"/>
+				<m:Button type="Reject" text="Cancel" press=".cancel"/>
+			</m:OverflowToolbar>
+		</footer>
+	</ObjectPageLayout>
+</mvc:View>

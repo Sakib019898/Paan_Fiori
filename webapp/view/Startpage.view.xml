@@ -1,0 +1,42 @@
+<mvc:View
+	controllerName="sap.ui.demo.products.controller.Startpage"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+    xmlns:layout="sap.ui.layout">
+<Page title="{i18n>title}">
+<layout:VerticalLayout class="sapUiResponsiveMargin">
+<Title
+				titleStyle="H2"
+				text="{i18n>startpageTilesGroupTitle}"
+				class="sapUiTinyMarginBegin"/>
+                <layout:HorizontalLayout allowWrapping="true">
+ <GenericTile
+					class="sapUiTinyMarginBegin sapUiTinyMarginTop"
+					header="{i18n>localCrudTitle}"
+					subheader="{i18n>crudSubTitle}"
+					press=".onNavLocal">
+					<tileContent>
+						<TileContent>
+							<content>
+								<ImageContent src="sap-icon://cancel-maintenance"/>
+							</content>
+						</TileContent>
+					</tileContent>
+				</GenericTile>               
+<GenericTile
+					class="sapUiTinyMarginBegin sapUiTinyMarginTop"
+					header="{i18n>ODataCrudTitle}"
+					subheader="{i18n>crudSubTitle}"
+					press=".onNavToOdata">
+					<tileContent>
+						<TileContent>
+							<content>
+								<ImageContent src="sap-icon://action-settings"/>
+							</content>
+						</TileContent>
+					</tileContent>
+				</GenericTile>
+                </layout:HorizontalLayout>
+</layout:VerticalLayout>
+</Page>
+</mvc:View>

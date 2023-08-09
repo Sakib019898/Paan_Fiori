@@ -1,0 +1,251 @@
+<mvc:View xmlns:form="sap.ui.layout.form"
+	controllerName="sap.ui.demo.products.controller.Master"
+	xmlns:core="sap.ui.core"
+	xmlns="sap.m"
+	xmlns:f="sap.f"
+	xmlns:mvc="sap.ui.core.mvc">
+    <Page
+		title="{i18n>title}"
+		showNavButton="true"
+		navButtonPress=".onNavLocal"
+		backgroundDesign="Solid">
+		<Dialog id="oDialogCreate" 
+		        title="Create PAAN">
+
+		<form:SimpleForm layout="ColumnLayout">
+
+        <Label text="Paan ID"></Label>
+        <Input value="" id="PaanId" editable="false"/>
+         
+		<Label text="Name"></Label>
+        <Input id="PaanName"/>
+
+		<Label text="Description"></Label>
+		<Input id="PaanDes"/>
+        
+		<Label text="Category"></Label>
+		
+        <Select 
+		id="ct" 
+		selectedKey="Paan"
+		forceSelection="true">
+  <items>
+   <core:Item key="Paan" text="Paan"/>
+   <core:Item key="Biri" text="Biri"/>
+   <core:Item key="Tea" text="Tea"/>
+  </items>
+  </Select>
+
+		<Label text="Price"></Label>
+		<Input id="PaanPrice" type="Number"/>
+        <Input id="PriceUnit" value="BDT" editable="false"/>
+		
+
+		<Label text="Supplier"></Label>
+		<Input id="PaanSupplier"/>
+        
+		<Label text="Date of Supply"></Label>
+		<Input id="SupplyDate" type="Date"/>
+		
+		<Label text="Quantity"></Label>
+		<Input id="Qty" type="Number"/>
+        <Input id="QtyUnit" value="PC" editable="false"/>
+         
+		<Label text="Weight"></Label>
+		<Input id="Weight" type="Number"/>
+        <Input id="unit_m" value="EA" editable="false"/>
+		
+		<Label text="Width"></Label>
+		<Input id="Width" type="Number"/>
+        <Input id="unit_1" value="cm" editable="false"/>
+         
+		<Label text="Depth"></Label>
+		<Input id="Depth" type="Number"/>
+        <Input id="unit_2" value="cm" editable="false"/>
+        
+		<Label text="Height"></Label>
+		<Input id="Height" type="Number"/>
+        <Input id="unit_3" value="cm" editable="false"/>
+</form:SimpleForm>	
+
+			<OverflowToolbar>
+				<ToolbarSpacer/>
+				<Button type="Accept" text="Okay" press=".onAccept"/>
+				<Button type="Reject" text="Cancel" press=".onCancel"/>
+			</OverflowToolbar>
+		
+		</Dialog>
+    <f:DynamicPage id="dynamicPageId" 
+	               toggleHeaderOnTitleClick="false">
+		<!-- DynamicPage Title -->
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<Title text="Paan kha ({products>/ProductCollectionStats/Counts/Total})"/>
+				</f:heading>
+			</f:DynamicPageTitle>
+		</f:title>
+ 
+		<f:content>
+			<VBox fitContainer="true">
+				
+				<OverflowToolbar class="sapFDynamicPageAlignContent">
+				    <Button
+				        icon="sap-icon://create"
+						text="Create"
+						type="Transparent"
+						press=".onCreate"/>
+					<Button
+						icon="sap-icon://edit"
+						text="Edit"
+						type="Transparent"
+						press=".onEdit"/>
+					<Button
+						icon="sap-icon://delete"
+						text="Delete"
+						type="Transparent"
+						press=".onDelete"/>
+						<Button
+						icon="sap-icon://sys-cancel"
+						text="Cancel"
+						type="Transparent"
+						press=".onEditCancel"/>
+					<ToolbarSpacer/>
+					<SearchField search=".onSearch" width="17.5rem"/>
+					<OverflowToolbarButton icon="sap-icon://filter" text="Add" type="Transparent" press=".onAdd"/>
+					<OverflowToolbarButton icon="sap-icon://sort" text="Sort" type="Transparent" press=".onSort"/>
+				</OverflowToolbar>
+				<Table
+					id="productsTable"
+					inset="false"
+					items="{
+						path: 'products>/ProductCollection',
+						sorter: {
+							path: 'MainCategory',
+                            group : false
+						}
+					}"
+					class="sapFDynamicPageAlignContent"
+					width="auto"
+					growing="true">
+					<columns>
+						<Column width="12em">
+							<Text text="Product"/>
+						</Column>
+						<Column	hAlign="End">
+							<Text text="Price"/>
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem type="Navigation" press=".onListItemPress">
+							<cells>
+								<ObjectIdentifier title="{products>Name}" text="{products>ProductId}"/>
+								<ObjectNumber
+									number="{
+										parts:[
+											{path:'products>Price'},
+											{path:'products>CurrencyCode'}
+										],
+										type: 'sap.ui.model.type.Currency',
+										formatOptions: {showMeasure: false}
+									}"
+									unit="{products>CurrencyCode}"
+									state="{= ${products>Price} > 15 ? 'Error' : 'Success' }"/>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+				<Table
+					id="productsTable2"
+					inset="false"
+					items="{
+						path: 'products>/ProductCollection',
+						sorter: {
+							path: 'Name'
+						}
+					}"
+					class="sapFDynamicPageAlignContent"
+					width="auto"
+					visible="false"
+					>
+					<columns>
+						<Column width="12em">
+							<Text text="Product"/>
+						</Column>
+						<Column	hAlign="End">
+							<Text text="Price"/>
+						</Column>
+						<Column width="6em" hAlign="End">
+						</Column> 
+					</columns>
+					<items>
+						<ColumnListItem type="Navigation" press=".onListItemPress">
+							<cells>
+								<ObjectIdentifier title="{products>Name}" text="{products>ProductId}"/>
+								<ObjectNumber
+									number="{
+										parts:[
+											{path:'products>Price'},
+											{path:'products>CurrencyCode'}
+										],
+										type: 'sap.ui.model.type.Currency',
+										formatOptions: {showMeasure: false}
+									}"
+									unit="{products>CurrencyCode}"
+									state="{= ${products>Price} > 15 ? 'Error' : 'Success' }"/>
+									<HBox>
+									   <Button icon="sap-icon://edit" text="Edit" press=".onTableEdit"/>
+									</HBox>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+				<Table
+					id="productsTable3"
+					inset="false"
+					items="{
+						path: 'products>/ProductCollection',
+						sorter: {
+							path: 'Name'
+						}
+					}"
+					class="sapFDynamicPageAlignContent"
+					width="auto"
+					visible="false">
+					<columns>
+						<Column width="12em">
+							<Text text="Product"/>
+						</Column>
+						<Column	hAlign="End">
+							<Text text="Price"/>
+						</Column>
+						<Column width="7em" hAlign="End">
+						</Column> 
+					</columns>
+					<items>
+						<ColumnListItem type="Navigation" press=".onListItemPress">
+							<cells>
+								<ObjectIdentifier title="{products>Name}" text="{products>ProductId}"/>
+								<ObjectNumber
+									number="{
+										parts:[
+											{path:'products>Price'},
+											{path:'products>CurrencyCode'}
+										],
+										type: 'sap.ui.model.type.Currency',
+										formatOptions: {showMeasure: false}
+									}"
+									unit="{products>CurrencyCode}"
+									state="{= ${products>Price} > 15 ? 'Error' : 'Success' }"/>
+									<HBox>
+									   <Button icon="sap-icon://delete" type="Reject" text="Delete" press=".onTableDelete"/>
+									</HBox>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</VBox>
+		</f:content>
+	</f:DynamicPage>
+    </Page>
+</mvc:View>

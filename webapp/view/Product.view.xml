@@ -1,0 +1,130 @@
+<mvc:View controllerName="sap.ui.demo.products.controller.Product"
+          xmlns:mvc="sap.ui.core.mvc"
+          xmlns:form="sap.ui.layout.form"
+          displayBlock="true"
+          xmlns="sap.m">
+           
+     <Page
+		title="Odata CRUD"
+		showNavButton="true"
+		navButtonPress=".onNavLocal"
+		backgroundDesign="Solid">
+   <Dialog id="oDialogCreate" 
+		        title="Create PAAN">
+
+		<form:SimpleForm layout="ColumnLayout">
+
+        <Label text="ID"></Label>
+        <Input value="" id="productId" editable="false"/>
+         
+		<Label text="Name"></Label>
+     <Input id="productName"/>
+
+		<Label text="Description"></Label>
+		<Input id="productDes"/>
+
+		<Label text="Price"></Label>
+		<Input id="productPrice" type="Number"/>
+
+    <Label text="Rating"></Label>
+		<RatingIndicator class="sapUiSmallMarginBeginEnd" id="productRating" iconSize="2em"></RatingIndicator>
+</form:SimpleForm>	
+
+			<OverflowToolbar>
+				<ToolbarSpacer/>
+				<Button type="Accept" text="Okay" press=".onAccept"/>
+				<Button type="Reject" text="Cancel" press=".onCancel"/>
+			</OverflowToolbar>
+		
+		</Dialog>
+
+    <OverflowToolbar class="sapFDynamicPageAlignContent">
+				    <Button
+				        icon="sap-icon://create"
+						text="Create"
+						type="Transparent"
+						press=".onCreate"/>
+					<Button
+						icon="sap-icon://delete"
+						text="Delete"
+						type="Transparent"
+						press=".onDelete"/>
+						<Button
+						icon="sap-icon://sys-cancel"
+						text="Cancel"
+						type="Transparent"
+						press=".onEditCancel"/>
+					<ToolbarSpacer/>
+					<SearchField search=".onSearch" width="17.5rem"/>
+					<OverflowToolbarButton icon="sap-icon://filter" text="Add" type="Transparent" press=".onFilter"/>
+					<OverflowToolbarButton icon="sap-icon://sort" text="Sort" type="Transparent" press=".onSort"/>
+				</OverflowToolbar>
+      <Table id="idProducts" 
+             items="{/results}">
+        <columns>
+          <Column width="7em">
+             <Text text="ID"></Text>
+          </Column>
+          <Column>
+             <Text text="Name"></Text>
+          </Column>
+          <Column>
+             <Text text="Description"></Text>
+          </Column>
+          <Column width="10em" hAlign="End">
+             <Text text="Price"></Text>
+          </Column>
+          
+        </columns>
+
+        <items>
+          <ColumnListItem type="Navigation"
+				                	press="onPress">
+            <cells>
+               <Text text="{ID}"></Text>
+               <Text text="{Name}"></Text>
+               <Text text="{Description}"></Text>
+               <ObjectNumber number="{Price}" state="{= ${Price} > 20 ? 'Error' : 'Success' }"/>
+               
+            </cells>
+          </ColumnListItem>
+        </items>
+      </Table>
+      <Table id="idProducts_del" 
+             items="{/results}"
+             visible="false">
+        <columns>
+          <Column width="7em">
+             <Text text="ID"></Text>
+          </Column>
+          <Column>
+             <Text text="Name"></Text>
+          </Column>
+          <Column>
+             <Text text="Description"></Text>
+          </Column>
+          <Column width="10em" hAlign="End">
+             <Text text="Price"></Text>
+          </Column>
+          <Column width="7em" hAlign="End">
+						</Column>
+        </columns>
+
+        <items>
+          <ColumnListItem type="Navigation"
+				                	press="onPress">
+            <cells>
+               <Text text="{ID}"></Text>
+               <Text text="{Name}"></Text>
+               <Text text="{Description}"></Text>
+               <ObjectNumber number="{Price}" state="{= ${Price} > 20 ? 'Error' : 'Success' }"/>
+               <HBox>
+									<Button icon="sap-icon://delete" type="Reject" text="Delete" press=".onTableDelete"/>
+								</HBox>
+            </cells>
+          </ColumnListItem>
+        </items>
+      </Table>
+
+    </Page>
+</mvc:View>
